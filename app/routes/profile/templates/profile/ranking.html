@@ -1,24 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Рейтинг пользователей{% endblock %}
-{% block content %}
-<h2>Рейтинг пользователей</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Позиция</th>
-            <th>Имя пользователя</th>
-            <th>Решённые задачи</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user, solved_count in users %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ solved_count }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block content %}
+<div class="ranking-table-container">
+    <h2>Рейтинг пользователей</h2>
+    <table class="ranking-table">
+        <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Никнейм</th>
+                <th>Решено задач</th>
+                <th>Рейтинг</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank in user_ranks %}
+            <tr class="{{ loop.index % 2 == 0 and 'even' or 'odd' }}">
+                <td>{{ loop.index }}</td>
+                <td>{{ rank.username }}</td>
+                <td>{{ rank.solved }}</td>
+                <td>{{ rank.rank | round(2) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
