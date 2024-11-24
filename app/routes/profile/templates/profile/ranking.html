@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Рейтинг пользователей{% endblock %}
+{% block content %}
+<h2>Рейтинг пользователей</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Позиция</th>
+            <th>Имя пользователя</th>
+            <th>Решённые задачи</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user, solved_count in users %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ solved_count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Список задач{% endblock %}
+{% block content %}
+<h2>Список задач</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description[:50] }}...</td>
+            <td>
+                <a href="{{ url_for('tasks.task_detail', task_id=task.id) }}">Перейти</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

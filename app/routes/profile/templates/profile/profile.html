@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Мой профиль{% endblock %}
+{% block content %}
+<h2>Мой профиль</h2>
+
+<h3>Решённые задачи</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in solved_tasks %}
+        <tr>
+            <td>{{ task.task_id }}</td>
+            <td>{{ task.task.title }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="2">Вы ещё не решили ни одной задачи.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Добавить задачу{% endblock %}
+{% block content %}
+<h2>Добавить новую задачу</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size=32) }}
+    </p>
+    <p>
+        {{ form.description.label }}<br>
+        {{ form.description(rows=5, cols=40) }}
+    </p>
+    <p>
+        {{ form.num_tests.label }}<br>
+        {{ form.num_tests(size=10) }}
+    </p>
+    <p>
+        {{ form.correct_solution.label }}<br>
+        {{ form.correct_solution(rows=5, cols=40) }}
+    </p>
+    <p><button type="submit">Сохранить</button></p>
+</form>
+{% endblock %}
