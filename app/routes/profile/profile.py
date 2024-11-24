@@ -4,13 +4,22 @@ from flask_login import login_required, current_user
 
 bp = Blueprint("profile", __name__, url_prefix="/profile", template_folder="templates/profile")
 
+
 @bp.route("/", methods=["GET"])
 @login_required
 def profile():
-    """Отображает профиль пользователя и список решённых им задач"""
-    solved_tasks = UserTask.query.filter_by(user_id=current_user.id, solved=True).all()
-    return render_template("profile.html", solved_tasks=solved_tasks)
+    """Отображает профиль пользователя."""
+    # Получаем текущего пользователя
+    user = current_user
 
+    # Получаем количество решённых задач
+    solved_tasks_count = UserTask.query.filter_by(user_id=user.id, solved=True).count()
+
+    # Получаем общее количество задач
+    total_tasks_count = Task.query.count()
+
+    return render_template("profile.html", user=user, solved_tasks_count=solved_tasks_count,
+                           total_tasks_count=total_tasks_count)
 
 @bp.route("/ranking", methods=["GET"])
 def ranking():
