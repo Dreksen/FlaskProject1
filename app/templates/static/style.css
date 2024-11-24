@@ -161,3 +161,47 @@ h1, h2, h3 {
     font-weight: bold;
     text-align: center;
 }
+
+/* Контейнер для таблицы */
+.table-container {
+    width: 80%;
+    margin: 0 auto; /* Центрирование таблицы */
+    margin-top: 20px;
+}
+
+/* Стили таблицы задач */
+.task-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.task-table th, .task-table td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 10px;
+}
+
+.task-table th {
+    background-color: #f4f4f9;
+    font-weight: bold;
+    text-align: center;
+}
+
+.task-table td {
+    text-align: center;
+}
+
+.task-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.task-table a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.task-table a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+

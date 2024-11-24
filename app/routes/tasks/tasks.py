@@ -32,7 +32,9 @@ def task_detail(task_id: int):
 @login_required
 def task_list():
     """Отображает список всех задач"""
-    tasks = Task.query.all()
+    # tasks = Task.query.all()
+    tasks = Task.query.order_by(Task.id.asc()).all()  # Сортировка по возрастанию ID
+
     return render_template("list.html", tasks=tasks)
 
 def run_tests(code, task_number):

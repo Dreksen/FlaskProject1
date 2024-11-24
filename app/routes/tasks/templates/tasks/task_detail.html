@@ -3,23 +3,24 @@
 {% block title %}{{ task.title }}{% endblock %}
 
 {% block content %}
-<div class="task-container">
-    <h2 class="task-title">Задача №{{ task.id }}: {{ task.title }}</h2>
+    <div class="task-container">
+        <h2 class="task-title">Задача №{{ task.id }}: {{ task.title }}</h2>
         <form method="POST" class="solution-form">
-             <p>{{ task.description }}</p>
+            <p>{{ task.description }}</p>
             <textarea id="solution_code" name="solution_code" required></textarea>
             <button type="submit">Отправить</button>
         </form>
 
-</div>
 
-{% if result %}
-    <div class="result-message">
+
         {% if result %}
-        <div class="result {% if success %}success{% else %}error{% endif %}">
-            <p>Результат: {{ result }}</p>
-        </div>
-    {% endif %}
-    </div>
-{% endif %}
+            <div class="result-message">
+                {% if result %}
+                    <div class="result {% if success %}success{% else %}error{% endif %}">
+                        <p>Результат: {{ result }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            </div>
+        {% endif %}
 {% endblock %}
