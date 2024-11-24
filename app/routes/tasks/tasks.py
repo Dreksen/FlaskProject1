@@ -11,19 +11,20 @@ def task_detail(task_id: int):
     """Отображает задачу и принимает решение от пользователя."""
     task = Task.query.get_or_404(task_id)
     user_task = UserTask.query.filter_by(user_id=current_user.id, task_id=task.id).first()
-    result = None
     success = False
+    result = None
+    if user_task and user_task.solved:
+        success = True
+
     if request.method == "POST":
         solution_code = request.form["solution_code"]
         result = run_tests(solution_code, str(task_id))
 
-        if "Правильный ответ!" in result:
+        if result and "Правильный ответ!" in result and not success:
             user_task = UserTask(user_id=current_user.id, task_id=task.id, solved=True)
-            print("adding ", user_task)
             db.session.add(user_task)
             db.session.commit()
-    print("point1end")
-    return render_template("task_detail.html", task=task, result=result, success=success)
+    return render_template("task_detail.html", task=task, result=result)
 
 @bp.route("/", methods=["GET"])
 @login_required
@@ -41,6 +42,7 @@ def run_tests(code, task_number):
     try:
         # Получаем задачу из базы данных
         task = Task.query.filter_by(id=task_number).first()
+
         if not task:
             return f"Задача с номером {task_number} не найдена.", 404
 
