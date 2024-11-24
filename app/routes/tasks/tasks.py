@@ -15,12 +15,8 @@ def task_detail(task_id: int):
     success = False
     if request.method == "POST":
         solution_code = request.form["solution_code"]
-        test_folder = f"task_{task.id}"
-
-        # Проверка решения
-        # result = run_test(test_folder, solution_code)
         result = run_tests(solution_code, str(task_id))
-        # Если решение правильное, обновляем статус задачи
+
         if "Правильное ответ!" in result:
             success = True
             if user_task:
@@ -29,7 +25,7 @@ def task_detail(task_id: int):
                 user_task = UserTask(user_id=current_user.id, task_id=task.id, solved=True)
                 db.session.add(user_task)
             db.session.commit()
-
+    print("point1end")
     return render_template("task_detail.html", task=task, result=result, success=success)
 
 @bp.route("/", methods=["GET"])
@@ -51,9 +47,8 @@ def run_tests(code, task_number):
 
         # Запуск процесса с передачей кода, номера задачи и количества тестов
         command = [
-            'python3', 'run_solution.py', code, str(task_number), str(test_count)
+            'python3', 'app/utils/run_solution.py', code, str(task_number), str(test_count)
         ]
-
         result = subprocess.run(command, capture_output=True, text=True)
 
         # Логирование stdout и stderr

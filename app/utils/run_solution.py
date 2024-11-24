@@ -24,7 +24,7 @@ def execute_code(code, test_inputs):
 
         # Передаем данные в контейнер через stdin
         result = subprocess.run(command, input=test_inputs, text=True, capture_output=True)
-        # print("RES: ", result.stdout)
+
         # Проверяем вывод и возвращаем результат
         if result.returncode != 0:
             return f"Ошибка выполнения: {result.stderr}"
@@ -41,9 +41,9 @@ def run_solution():
     task_number = sys.argv[2]  # Номер задачи
     test_count = int(sys.argv[3])  # Количество тестов для задачи
 
-    task_folder = f"tests/task_{task_number}"
+    task_folder = f"app/utils/tests/task_{task_number}"
 
-    for i in range(1, test_count + 1):  # Тестируем столько раз, сколько указано
+    for i in range(1, test_count + 1):
         test_input_file = os.path.join(task_folder, f"test{i}.txt")
         correct_answer_file = os.path.join(task_folder, f"answer{i}.txt")
 
@@ -72,6 +72,7 @@ def run_solution():
 
     logging.info("Все тесты пройдены успешно!")
     print("Правильный ответ!")
+
 
 
 
