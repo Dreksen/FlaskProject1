@@ -18,9 +18,10 @@
             <tr>
                 <td>{{ task.id }}</td>
                 <td><a href="{{ url_for('tasks.task_detail', task_id=task.id) }}">{{ task.title }}</a></td>
-                <td>{% if task.solved %}✔{% endif %}</td>
+                <td>{% if solved_tasks.get(task.id) %} + {% endif %}</td>
             </tr>
             {% endfor %}
+
         </tbody>
     </table>
 </div>

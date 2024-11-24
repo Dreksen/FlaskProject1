@@ -17,13 +17,10 @@ def task_detail(task_id: int):
         solution_code = request.form["solution_code"]
         result = run_tests(solution_code, str(task_id))
 
-        if "Правильное ответ!" in result:
-            success = True
-            if user_task:
-                user_task.solved = True
-            else:
-                user_task = UserTask(user_id=current_user.id, task_id=task.id, solved=True)
-                db.session.add(user_task)
+        if "Правильный ответ!" in result:
+            user_task = UserTask(user_id=current_user.id, task_id=task.id, solved=True)
+            print("adding ", user_task)
+            db.session.add(user_task)
             db.session.commit()
     print("point1end")
     return render_template("task_detail.html", task=task, result=result, success=success)
@@ -31,11 +28,13 @@ def task_detail(task_id: int):
 @bp.route("/", methods=["GET"])
 @login_required
 def task_list():
-    """Отображает список всех задач"""
-    # tasks = Task.query.all()
-    tasks = Task.query.order_by(Task.id.asc()).all()  # Сортировка по возрастанию ID
+    tasks = Task.query.order_by(Task.id.asc()).all()
+    solved_tasks = {
+        task.task_id: task.solved
+        for task in UserTask.query.filter_by(user_id=current_user.id).all()
+    }
+    return render_template("list.html", tasks=tasks, solved_tasks=solved_tasks)
 
-    return render_template("list.html", tasks=tasks)
 
 def run_tests(code, task_number):
     """Запуск тестов для решения пользователя"""
